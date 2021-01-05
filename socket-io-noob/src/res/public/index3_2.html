@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Chat 2</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <style>
+        body { padding-top:50px; }
+        #messages li {
+            list-style: none;
+            padding: 12px;
+            display: block;
+        }
+        #message li:nth-child(odd) {
+            background: antiquewhite;
+        }
+        #message li:nth-child(even) {
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div>
+                <ul id="messages">
+
+                </ul>
+            </div>
+            <form id="message-form">
+                <div class="col-sm-10">
+                    <input id="user-message" type="text" placeholder="message..." class="form-control" />
+                </div>
+                <div class="col-sm-2">
+                    <input id="button-submit" type="submit" value="Send!" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="socket.io/socket.io.js"></script>
+<script src="js/chat2.js" type="application/javascript"></script>
+</html>
