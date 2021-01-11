@@ -1,3 +1,3 @@
 import server from "../server"
 
-const app = server.app
+export const app = server.app

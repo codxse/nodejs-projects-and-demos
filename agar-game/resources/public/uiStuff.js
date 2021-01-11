@@ -1,9 +1,9 @@
-let wHeight = $(window).height();
-let wWidth = $(window).width();
-let player = {} //This is all things "this" player
+var wHeight = $(window).height();
+var wWidth = $(window).width();
+var player = {} //This is all things "this" player
 
-let canvas = document.querySelector('#the-canvas');
-let context = canvas.getContext('2d');
+var canvas = document.querySelector('#the-canvas');
+var context = canvas.getContext('2d');
 canvas.width = wWidth;
 canvas.height = wHeight;
 
@@ -11,7 +11,7 @@ $(window).load(()=>{
     $('#loginModal').modal('show')
 })
 
-$('.name-form').submit((event)=>{
+$('.name-form').submit(function (event) {
     event.preventDefault()
     // console.log("Submitted!")
     player.name = document.querySelector('#name-input').value;
@@ -20,7 +20,7 @@ $('.name-form').submit((event)=>{
     document.querySelector('.player-name').innerHTML = player.name
 })
 
-$('.start-game').click((event)=>{
+$('.start-game').click(function (event) {
     $('.modal').modal('hide');
     $('.hiddenOnStart').removeAttr('hidden');
     init();

@@ -1,3 +1,3 @@
 import server from "../server"
 
-const io = server.io
+export const io = server.io
