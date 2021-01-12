@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { Template } from "../src/app"
-import { numberAndTextAndNumberTextExpected, numberAndTextAndNumberTextMock } from "./mock/simple-template";
+import { numberAndTextAndNumberTextExpected, numberAndTextAndNumberTextMock, textAndTextareaMock, textAndTextareaExpected } from "./mock/simple-template";
 
 describe("Regex std vars to mustache test", () => {
 
@@ -313,14 +313,21 @@ describe("Regex std vars to mustache test", () => {
     })
 
     describe("Integration test, two or more vars on template", () => {
-        it("number and number text on same template", () => {
-            const text = "Hallo saya punya nama alias sebanyak {{aliasname.count}} atau terbilang <mark id=\"any-id\" class=\"any-class template-variable2\" data-id=\"15f44a53-f246-45e7-b422-41af68203197\" data-variable=\"count\" data-varType=\"number\" data-question=\"any string\" data-section=\"aliasname\" data-numberType=\"text\" data-prevtext=\"any string\"><<aliasname.count.TERBILANG>></mark>"
-            const template = new Template(numberAndTextAndNumberTextExpected)
+        it("number and number text on same template same line", () => {
+            const template = new Template(numberAndTextAndNumberTextMock)
             expect(template
               .toNumberMustache()
               .toNumberTextMustache()
               .mustache
             ).to.equal(numberAndTextAndNumberTextExpected)
+        })
+
+        it("text and textarea on same template same line", () => {
+            const template = new Template(textAndTextareaMock)
+            expect(template
+              .toTextOrTextareaOrRadioOrDropdownMustache()
+              .mustache
+            ).to.equals(textAndTextareaExpected)
         })
     })
 })
