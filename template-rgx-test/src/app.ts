@@ -64,27 +64,25 @@ export class Template implements ITemplate {
 
     toNumberMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')number(?:"|')){1})(?=.*?(?:numberType=(?:"|')number(?:"|')){0,1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+>>.*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.raw) || []
+        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
         if (section && variable && innerText) {
-            const mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
-            return new Template(this.raw, mustache)
+            this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
         }
         return this
     }
 
     toNumberTextMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')number(?:"|')){1})(?=.*?(?:numberType=(?:"|')text(?:"|')){1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+\.TERBILANG>>.*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.raw) || []
+        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
         if (section && variable && innerText) {
-            const mustache = this.mustache.replace(fulltext, `{{#funct.numberToText}}{{${section}.${variable}}}{{/funct.numberToText}}`)
-            return new Template(this.raw, mustache)
+            this._mustache = this.mustache.replace(fulltext, `{{#funct.numberToText}}{{${section}.${variable}}}{{/funct.numberToText}}`)
         }
         return this
     }
 
     toTextOrTextareaOrRadioOrDropdownMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')(?:text|textarea|radio|dropdown)(?:"|')){1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+>>.*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.raw) || []
+        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
         if (section && variable && innerText) {
             this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
         }
