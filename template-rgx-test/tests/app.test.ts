@@ -314,10 +314,10 @@ describe("Regex std vars to mustache test", () => {
 
     describe("Integration test, two or more vars on template", () => {
         it("number and number text on same template", () => {
-            const text = "Hallo saya punya nama alias sebanyak {{aliasname.count}} atau terbilang <mark id=\"any-id\" class=\"any-class template-variable2\" data-id=\"15f44a53-f246-45e7-b422-41af68203197\" data-variable=\"count\" data-varType=\"number\" data-question=\"any string\" data-section=\"aliasname\" data-numberType=\"text\" data-prevtext=\"any string\"><<aliasname.count.TERBILANG>></mark>\n"
+            const text = "Hallo saya punya nama alias sebanyak {{aliasname.count}} atau terbilang <mark id=\"any-id\" class=\"any-class template-variable2\" data-id=\"15f44a53-f246-45e7-b422-41af68203197\" data-variable=\"count\" data-varType=\"number\" data-question=\"any string\" data-section=\"aliasname\" data-numberType=\"text\" data-prevtext=\"any string\"><<aliasname.count.TERBILANG>></mark>"
             const template = new Template(text)
             expect(template
-              .toNumberMustache()
+              //.toNumberMustache()
               .toNumberTextMustache()
               .mustache
             ).to.equal(numberAndTextAndNumberTextExpected)

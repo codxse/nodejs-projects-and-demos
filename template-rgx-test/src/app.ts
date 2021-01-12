@@ -25,9 +25,9 @@ export class Template implements ITemplate {
         return this._mustache
     }
 
-    constructor(raw: string) {
+    constructor(raw: string, mustache?: string) {
         this.raw = raw
-        this._mustache = raw
+        this._mustache = mustache ? mustache : raw
     }
 
     toCurrencyNumberMustache = (): Template => {
@@ -66,7 +66,8 @@ export class Template implements ITemplate {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')number(?:"|')){1})(?=.*?(?:numberType=(?:"|')number(?:"|')){0,1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+>>.*?)<\/mark>/gm
         const [fulltext, section, variable, innerText] = re.exec(this.raw) || []
         if (section && variable && innerText) {
-            this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
+            const mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
+            return new Template(this.raw, mustache)
         }
         return this
     }
@@ -75,7 +76,8 @@ export class Template implements ITemplate {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')number(?:"|')){1})(?=.*?(?:numberType=(?:"|')text(?:"|')){1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+\.TERBILANG>>.*?)<\/mark>/gm
         const [fulltext, section, variable, innerText] = re.exec(this.raw) || []
         if (section && variable && innerText) {
-            this._mustache = this.mustache.replace(fulltext, `{{#funct.numberToText}}{{${section}.${variable}}}{{/funct.numberToText}}`)
+            const mustache = this.mustache.replace(fulltext, `{{#funct.numberToText}}{{${section}.${variable}}}{{/funct.numberToText}}`)
+            return new Template(this.raw, mustache)
         }
         return this
     }
