@@ -30,20 +30,33 @@ export class Template implements ITemplate {
         this._mustache = mustache ? mustache : raw
     }
 
-    toCurrencyNumberMustache = (): Template => {
+    toCurrencyNumberMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')currency(?:"|')){1})(?=.*?(?:data-section=(?:"|')(\w+)(?:"|')){1})(?=.*?(?:data-variable=(?:"|')(\w+)(?:"|')){1}).*?>(.*?<<\w+\.\w+>>\s*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
-        if (section && variable && innerText) {
-            this._mustache = this._mustache.replace(fulltext, `{{#funct.formatCurrencyNumber}}{{${section}.${variable}}}{{/funct.formatCurrencyNumber}}`)
+        const exp: RegExpMatchArray | null = re.exec(this.mustache)
+        if (exp) {
+            const fulltext = exp[0]
+            const section = exp[1]
+            const variable = exp[2]
+            const innerText = exp[3]
+            if (section && variable && innerText) {
+                this._mustache = this._mustache.replace(fulltext, `{{#funct.formatCurrencyNumber}}{{${section}.${variable}}}{{/funct.formatCurrencyNumber}}`)
+            }
         }
         return this
     }
 
     toCurrencyTextMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')currency(?:"|')){1})(?=.*?(?:data-section=(?:"|')(\w+)(?:"|')){1})(?=.*?(?:data-variable=(?:"|')(\w+)(?:"|')){1})(?=.*?(?:data-numberType=(?:"|')text(?:"|')){1}).*?>(.*?<<\w+\.\w+\.TERBILANG>>.*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
-        if (section && variable && innerText) {
-            this._mustache = this.mustache.replace(fulltext, `{{#funct.currencyNumberToText}}{{${section}.${variable}}}{{/funct.currencyNumberToText}}`)
+
+        const exp: RegExpMatchArray | null = re.exec(this.mustache)
+        if (exp) {
+            const fulltext = exp[0]
+            const section = exp[1]
+            const variable = exp[2]
+            const innerText = exp[3]
+            if (section && variable && innerText) {
+                this._mustache = this.mustache.replace(fulltext, `{{#funct.currencyNumberToText}}{{${section}.${variable}}}{{/funct.currencyNumberToText}}`)
+            }
         }
         return this
     }
@@ -64,29 +77,46 @@ export class Template implements ITemplate {
 
     toNumberMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')number(?:"|')){1})(?=.*?(?:numberType=(?:"|')number(?:"|')){0,1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+>>.*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
-        if (section && variable && innerText) {
-            this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
+        const exp: RegExpMatchArray | null = re.exec(this.mustache)
+        if (exp) {
+            const fulltext = exp[0]
+            const section = exp[1]
+            const variable = exp[2]
+            const innerText = exp[3]
+            if (section && variable && innerText) {
+                this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
+            }
         }
         return this
     }
 
     toNumberTextMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')number(?:"|')){1})(?=.*?(?:numberType=(?:"|')text(?:"|')){1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+\.TERBILANG>>.*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
-        if (section && variable && innerText) {
-            this._mustache = this.mustache.replace(fulltext, `{{#funct.numberToText}}{{${section}.${variable}}}{{/funct.numberToText}}`)
+        const exp: RegExpMatchArray | null = re.exec(this.mustache)
+        if (exp) {
+            const fulltext = exp[0]
+            const section = exp[1]
+            const variable = exp[2]
+            const innerText = exp[3]
+            if (section && variable && innerText) {
+                this._mustache = this.mustache.replace(fulltext, `{{#funct.numberToText}}{{${section}.${variable}}}{{/funct.numberToText}}`)
+            }
         }
         return this
     }
 
     toTextOrTextareaOrRadioOrDropdownMustache(): Template {
         const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-varType=(?:"|')(?:text|textarea|radio|dropdown)(?:"|')){1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+>>.*?)<\/mark>/gm
-        const [fulltext, section, variable, innerText] = re.exec(this.mustache) || []
-        if (section && variable && innerText) {
-            this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
+        const exp: RegExpMatchArray | null = re.exec(this.mustache)
+        if (exp) {
+            const fulltext = exp[0]
+            const section = exp[1]
+            const variable = exp[2]
+            const innerText = exp[3]
+            if (section && variable && innerText) {
+                this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
+            }
         }
         return this
     }
 }
-
