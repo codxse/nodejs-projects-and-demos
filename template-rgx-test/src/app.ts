@@ -31,7 +31,7 @@ export class Template implements ITemplate {
     }
 
     toCurrencyNumberMustache(): Template {
-        const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-var(?:T|t)ype=(?:"|')currency(?:"|')){1})(?=.*?(?:data-section=(?:"|')(\w+)(?:"|')){1})(?=.*?(?:data-variable=(?:"|')(\w+)(?:"|')){1}).*?>(.*?<<\w+\.\w+>>\s*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?(?:data-number(?:t|T)ype=(?:'|")number(?:'|")){0,1})(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?<<\w+\.\w+>>[^>]*?)<\/mark>/gm
 
         let exp = null
         const mustache = this.mustache
@@ -51,7 +51,7 @@ export class Template implements ITemplate {
     }
 
     toCurrencyTextMustache(): Template {
-        const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-var(?:T|t)ype=(?:"|')currency(?:"|')){1})(?=.*?(?:data-section=(?:"|')(\w+)(?:"|')){1})(?=.*?(?:data-variable=(?:"|')(\w+)(?:"|')){1})(?=.*?(?:data-numberType=(?:"|')text(?:"|')){1}).*?>(.*?<<\w+\.\w+\.TERBILANG>>.*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-number(?:t|T)ype=(?:'|")text(?:'|"))(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?<<\w+\.\w+\.TERBILANG>>[^>]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -69,7 +69,7 @@ export class Template implements ITemplate {
     }
 
     toDateMustache(format?: DateFormat): Template {
-        const re = /<mark.*?(?=.*?(?:data-date(?:f|F)ormat="(?<dateFormat>.*?)"){0,1})(?=.*?(?:data-var(?:t|T)ype=(?:"|')date(?:"|')){1})(?=.*?(?:class=(?:'|").*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-section=(?:'|")(?<sectionName>\w+)?(?:'|")){1})(?=.*?(?:data-variable=(?:"|')(?<variableName>\w+)(?:"|')){1}).*?>.*?(?<innerText>.*?<<\w+\.\w+>>\s*?).*?<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?(?:data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.*?)(?:'|")){0,1})(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-section=(?:"|')(?<sectionName>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(?<variableName>\w+)(?:"|'))[^<>]*?>(?<innerText>[^<]*?<<\w+\.\w+>>[^>]*?)<\/mark>/gm
         const validDateFormat = new Set(["dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd", "yyyy/MM/dd", "MMMM dd, yyyy", "dd MMMM, yyyy", "dd mmmm yyyy"])
 
         let exp = null
@@ -89,7 +89,7 @@ export class Template implements ITemplate {
     }
 
     toNumberMustache(): Template {
-        const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-var(?:t|T)ype=(?:"|')number(?:"|')){1})(?=.*?(?:number(?:t|T)ype=(?:"|')number(?:"|')){0,1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+>>.*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable2.*?(?:"|'))(?=[^<>]*?data-var(?:t|T)ype=(?:"|')number(?:"|'))(?=[^<>]*?(?:number(?:t|T)ype=(?:"|')number(?:"|')){0,1})(?=[^<>]*?data-section="(\w+)")(?=[^<>]*?data-variable="(\w+)")[^>]*?>([^<]*?<<\w+\.\w+>>[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -107,7 +107,7 @@ export class Template implements ITemplate {
     }
 
     toNumberTextMustache(): Template {
-        const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-var(?:T|t)ype=(?:"|')number(?:"|')){1})(?=.*?(?:numberType=(?:"|')text(?:"|')){1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+\.TERBILANG>>.*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable2.*?(?:"|'))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')number(?:"|'))(?=[^<>]*?number(?:t|T)ype=(?:"|')text(?:"|'))(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(\w+)(?:'|"))[^>]*?>([^<]*?<<\w+\.\w+\.TERBILANG>>[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -125,15 +125,16 @@ export class Template implements ITemplate {
     }
 
     toTextOrTextareaOrRadioOrDropdownMustache(): Template {
-        const re = /<mark.*?(?=.*?(?:class=(?:"|').*?template-variable2.*?(?:"|')){1})(?=.*?(?:data-var(?:T|t)ype=(?:"|')(?:text|textarea|radio|dropdown)(?:"|')){1})(?=.*?(?:data-section="(\w+)"){1})(?=.*?(?:data-variable="(\w+)"){1}).*?>(.*?<<\w+\.\w+>>.*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable.*?(?:'|"))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')(text|textarea|radio|dropdown)(?:"|'))(?=[^<>]*?data-section=(?:"|')(\w+)(?:"|'))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?<<\w+\.\w+>>[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
             if (exp) {
                 const fulltext = exp[0]
-                const section = exp[1]
-                const variable = exp[2]
-                const innerText = exp[3]
+                const varType = exp[1]
+                const section = exp[2]
+                const variable = exp[3]
+                const innerText = exp[4]
                 if (section && variable && innerText) {
                     this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
                 }

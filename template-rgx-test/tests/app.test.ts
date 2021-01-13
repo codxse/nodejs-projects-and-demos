@@ -347,9 +347,24 @@ describe("Regex std vars to mustache test", () => {
             ).to.equals(expected)
         })
 
-        it("combine str var with arr var minify", async () => {
+        it("combine std var text, date with arr var text currency, currency text minify", async () => {
             const raw = await readFile("/mock/01-min/raw.html")
             const expected = await readFile("/mock/01-min/mustache.html")
+            const template = new Template(raw)
+            expect(template
+              .toTextOrTextareaOrRadioOrDropdownMustache()
+              .toDateMustache()
+              .toCurrencyTextMustache()
+              .toCurrencyNumberMustache()
+              .toNumberTextMustache()
+              .toNumberMustache()
+              .mustache
+            ).to.equals(expected)
+        })
+
+        it("combine std var text, textarea, date, number, number text, currency, currency text with arr text, arr currency, arr currency text", async () => {
+            const raw = await readFile("/mock/02-min/raw.html")
+            const expected = await readFile("/mock/02-min/mustache.html")
             const template = new Template(raw)
             expect(template
               .toTextOrTextareaOrRadioOrDropdownMustache()
