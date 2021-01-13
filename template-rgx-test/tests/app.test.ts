@@ -1,6 +1,8 @@
 import { expect } from 'chai'
 import { Template } from "../src/app"
-import { numberAndTextAndNumberTextExpected, numberAndTextAndNumberTextMock, textAndTextareaMock, textAndTextareaExpected } from "./mock/simple-template";
+import { numberAndTextAndNumberTextExpected, numberAndTextAndNumberTextMock, textAndTextareaMock, textAndTextareaExpected } from "./mock/simple-template"
+import * as fs from "fs"
+import exp = require("constants");
 
 describe("Regex std vars to mustache test", () => {
 
@@ -329,5 +331,45 @@ describe("Regex std vars to mustache test", () => {
               .mustache
             ).to.equals(textAndTextareaExpected)
         })
+
+        it("combine str var with arr var pretty", async () => {
+            const raw = await readFile("/mock/01-pretty/raw.html")
+            const expected = await readFile("/mock/01-pretty/mustache.html")
+            const template = new Template(raw)
+            expect(template
+              .toTextOrTextareaOrRadioOrDropdownMustache()
+              .toDateMustache()
+              .toCurrencyTextMustache()
+              .toCurrencyNumberMustache()
+              .toNumberTextMustache()
+              .toNumberMustache()
+              .mustache
+            ).to.equals(expected)
+        })
+
+        it("combine str var with arr var minify", async () => {
+            const raw = await readFile("/mock/01-min/raw.html")
+            const expected = await readFile("/mock/01-min/mustache.html")
+            const template = new Template(raw)
+            expect(template
+              .toTextOrTextareaOrRadioOrDropdownMustache()
+              .toDateMustache()
+              .toCurrencyTextMustache()
+              .toCurrencyNumberMustache()
+              .toNumberTextMustache()
+              .toNumberMustache()
+              .mustache
+            ).to.equals(expected)
+        })
+
     })
 })
+
+function readFile(path: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        fs.readFile(__dirname + path, "utf8", (err, data) => {
+            if (err) reject(err)
+            if (data) resolve(data)
+        })
+    })
+}
