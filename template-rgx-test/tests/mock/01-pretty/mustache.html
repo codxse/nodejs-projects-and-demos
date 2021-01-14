@@ -1,6 +1,6 @@
 1<p>Halo nama saya {{identitas.fullname}}, berikut barang-barang punya saya:</p>
 <ol>
-    {{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa {{namaBarang}}&nbsp;dengan harga<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="number"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>{{/identitas.brangNadiar}}
+    {{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa {{namaBarang}}&nbsp;dengan harga{{#funct.formatCurrencyNumber}}{{hargaBarang}}{{/funct.formatCurrencyNumber}}&nbsp;({{#funct.currencyNumberToText}}{{hargaBarang}}{{/funct.currencyNumberToText}})</li>{{/identitas.brangNadiar}}
 </ol>
 <p><br></p>
 <p><br></p>

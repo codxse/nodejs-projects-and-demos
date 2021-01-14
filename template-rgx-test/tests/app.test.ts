@@ -400,11 +400,23 @@ describe("Array var test", () => {
 
     describe("Array number", () => {
         it("array number to mustache array number", () => {
-            //throw new Error("Method not implemented.")
+            const raw = `<ul><li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark>, Jumlah anak: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d68" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-variable="jmlAnak" data-vartype="number" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.jmlAnak>></mark> (<mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d66" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd066" data-variable="jmlAnak" data-vartype="number" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar" data-numbertype="text"><<identitas.person.jmlAnak.TERBILANG>></mark>)</li></ul>`
+            const expected = `<ul>{{#identitas.person}}<li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark>, Jumlah anak: {{jmlAnak}} (<mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d66" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd066" data-variable="jmlAnak" data-vartype="number" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar" data-numbertype="text"><<identitas.person.jmlAnak.TERBILANG>></mark>)</li>{{/identitas.person}}</ul>`
+            const template = new Template(raw)
+            expect(template
+              .toArrayNumberMustache()
+              .mustache
+            ).to.equals(expected)
         })
 
         it("array number to mustache array number explicit varType='number'", () => {
-            //throw new Error("Method not implemented.")
+            const raw = `<ul><li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark>, Jumlah anak: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d68" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-variable="jmlAnak" data-vartype="number" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.jmlAnak>></mark> (<mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d66" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd066" data-variable="jmlAnak" data-vartype="number" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar" data-numbertype="text"><<identitas.person.jmlAnak.TERBILANG>></mark>)</li></ul>`
+            const expected = `<ul>{{#identitas.person}}<li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark>, Jumlah anak: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d68" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-variable="jmlAnak" data-vartype="number" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.jmlAnak>></mark> ({{#funct.numberToText}}{{jmlAnak}}{{/funct.numberToText}})</li>{{/identitas.person}}</ul>`
+            const template = new Template(raw)
+            expect(template
+              .toArrayNumberTextMustache()
+              .mustache
+            ).to.equals(expected)
         })
     })
 
@@ -445,11 +457,13 @@ describe("Array var test", () => {
         })
 
         it("default date format as dd mmmm yyyy", () => {
-            //throw new Error("Method not implemented.")
-        })
-
-        it("invalid date format convey to dd mmmm yyyy", () => {
-            //throw new Error("Method not implemented.")
+            const raw = `<li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-dateformat="sssr" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark></li>`
+            const expected = `{{#identitas.person}}<li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: {{#funct.formatTime}}{{tglLahir}}| dd mmmm yyyy{{/funct.formatTime}}</li>{{/identitas.person}}`
+            const template = new Template(raw)
+            expect(template
+              .toArrayDateMustache()
+              .mustache
+            ).to.equals(expected)
         })
     })
 })
@@ -484,11 +498,11 @@ describe("Integration test, two or more vars on template", () => {
           .toNumberTextMustache()
           .toNumberMustache()
           .toArrayTextOrTextareaOrRadioOrDropdownMustache()
-          //.toArrayNumberTextMustache()
-          //.toArrayNumberMustache()
-          //.toArrayCurrencyTextMustache()
-          //.toArrayCurrencyMustache()
-          //.toArrayDateMustache()
+          .toArrayNumberTextMustache()
+          .toArrayNumberMustache()
+          .toArrayCurrencyTextMustache()
+          .toArrayCurrencyMustache()
+          .toArrayDateMustache()
           .mustache
         ).to.equals(expected)
     })
@@ -541,6 +555,18 @@ describe("Integration test, two or more vars on template", () => {
         ).to.equals(expected)
     })
 
+    it("Test array not wrapped, text, number, number text, and date", async () => {
+        const raw = await readFile("/mock/03-min/raw.html")
+        const expected = await readFile("/mock/03-min/mustache.html")
+        const template = new Template(raw)
+        expect(template
+          .toArrayTextOrTextareaOrRadioOrDropdownMustache()
+          .toArrayNumberTextMustache()
+          .toArrayNumberMustache()
+          .toArrayDateMustache()
+          .mustache
+        ).to.equals(expected)
+    })
 })
 
 /**
