@@ -16,6 +16,12 @@ export interface ITemplate {
     toNumberMustache(): Template
     toNumberTextMustache(): Template
     toTextOrTextareaOrRadioOrDropdownMustache(): Template
+    toArrayNumberMustache(): Template
+    toArrayNumberTextMustache(): Template
+    toArrayCurrencyMustache(): Template
+    toArrayCurrencyTextMustache(): Template
+    toArrayDateMustache(): Template
+    toArrayTextOrTextareaOrRadioOrDropdownMustache(): Template
 }
 
 export class Template implements ITemplate {
@@ -138,6 +144,43 @@ export class Template implements ITemplate {
                 if (section && variable && innerText) {
                     this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
                 }
+            }
+        }
+        return this
+    }
+
+    toArrayNumberMustache(): Template {
+        throw new Error("Method not implemented.")
+    }
+    toArrayNumberTextMustache(): Template {
+        throw new Error("Method not implemented.")
+    }
+    toArrayCurrencyMustache(): Template {
+        throw new Error("Method not implemented.")
+    }
+    toArrayCurrencyTextMustache(): Template {
+        throw new Error("Method not implemented.")
+    }
+    toArrayDateMustache(): Template {
+        throw new Error("Method not implemented.")
+    }
+    toArrayTextOrTextareaOrRadioOrDropdownMustache(): Template {
+        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>text|textarea|radio|dropdown)(?:'|"))[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        let exp = null
+        const mustache = this.mustache
+        while ((exp = re.exec(mustache)) != null) {
+            const groups = exp["groups"] || {}
+            const openList = groups["openList"]
+            const closeList = groups["closeList"]
+            const arrayName = groups["varName"]
+            const markerTag = groups["markerTag"]
+            const section = groups["section"]
+            const subVarName = groups["subVarName"]
+            const innerMark = groups["innerMark"]
+            if (openList && closeList && arrayName && section && subVarName && innerMark) {
+                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
+                this._mustache = this.mustache.replace(markerTag, `{{${subVarName}}}`)
+                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
             }
         }
         return this
