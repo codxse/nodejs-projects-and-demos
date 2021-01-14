@@ -152,18 +152,59 @@ export class Template implements ITemplate {
     toArrayNumberMustache(): Template {
         throw new Error("Method not implemented.")
     }
+
     toArrayNumberTextMustache(): Template {
         throw new Error("Method not implemented.")
     }
+
     toArrayCurrencyMustache(): Template {
-        throw new Error("Method not implemented.")
+        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>currency)(?:'|"))(?=[^<>]*?(data-number(?:T|t)ype=(?:'|")number(?:'|"))?)[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        let exp = null
+        const mustache = this.mustache
+        while ((exp = re.exec(mustache)) != null) {
+            const groups = exp["groups"] || {}
+            const openList = groups["openList"]
+            const closeList = groups["closeList"]
+            const arrayName = groups["varName"]
+            const markerTag = groups["markerTag"]
+            const section = groups["section"]
+            const subVarName = groups["subVarName"]
+            const innerMark = groups["innerMark"]
+            if (openList && closeList && arrayName && section && subVarName && innerMark) {
+                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
+                this._mustache = this._mustache.replace(markerTag, `{{#funct.formatCurrencyNumber}}{{${subVarName}}}{{/funct.formatCurrencyNumber}}`)
+                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            }
+        }
+        return this
     }
+
     toArrayCurrencyTextMustache(): Template {
-        throw new Error("Method not implemented.")
+        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>currency)(?:'|"))(?=[^<>]*?(data-number(?:T|t)ype=(?:'|")text(?:'|")))[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+\.TERBILANG>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        let exp = null
+        const mustache = this.mustache
+        while ((exp = re.exec(mustache)) != null) {
+            const groups = exp["groups"] || {}
+            const openList = groups["openList"]
+            const closeList = groups["closeList"]
+            const arrayName = groups["varName"]
+            const markerTag = groups["markerTag"]
+            const section = groups["section"]
+            const subVarName = groups["subVarName"]
+            const innerMark = groups["innerMark"]
+            if (openList && closeList && arrayName && section && subVarName && innerMark) {
+                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
+                this._mustache = this._mustache.replace(markerTag, `{{#funct.currencyNumberToText}}{{${subVarName}}}{{/funct.currencyNumberToText}}`)
+                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            }
+        }
+        return this
     }
+
     toArrayDateMustache(): Template {
         throw new Error("Method not implemented.")
     }
+
     toArrayTextOrTextareaOrRadioOrDropdownMustache(): Template {
         const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>text|textarea|radio|dropdown)(?:'|"))[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
         let exp = null

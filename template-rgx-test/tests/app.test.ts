@@ -350,18 +350,51 @@ describe("Array var test", () => {
     })
 
     describe("Array currency", () => {
-        it("array currency to mustache array currency", () => {
-            //throw new Error("Method not implemented.")
+        it("array currency not wrapped to mustache array currency explicit varType='number'", () => {
+            const raw = `<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga <mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="number"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>`
+            const expected = `{{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga {{#funct.formatCurrencyNumber}}{{hargaBarang}}{{/funct.formatCurrencyNumber}}&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>{{/identitas.brangNadiar}}`
+
+            const template = new Template(raw)
+            expect(template
+              .toArrayCurrencyMustache()
+              .mustache
+            ).to.equals(expected)
         })
 
-        it("array currency to mustache array currency explicit varType='number'", () => {
-            //throw new Error("Method not implemented.")
+        it("array currency wrapped mustache to mustache array currency not explicit varType='number'", () => {
+            const raw = `{{#heirinfo.legacy}}
+    <li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga <mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>
+{{/heirinfo.legacy}}`
+            const expected = `{{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga {{#funct.formatCurrencyNumber}}{{hargaBarang}}{{/funct.formatCurrencyNumber}}&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>{{/identitas.brangNadiar}}`
+            const template = new Template(raw)
+            expect(template
+              .toArrayCurrencyMustache()
+              .mustache
+            ).to.equals(expected)
         })
     })
 
     describe("Array currency text", () => {
-        it("array currency text to mustache array currency text", () => {
-            //throw new Error("Method not implemented.")
+        it("array currency not wrapped mustache text to mustache array currency text", () => {
+            const raw = `<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="number"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>`
+            const expected = `{{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="number"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;({{#funct.currencyNumberToText}}{{hargaBarang}}{{/funct.currencyNumberToText}})</li>{{/identitas.brangNadiar}}`
+            const template = new Template(raw)
+            expect(template
+              .toArrayCurrencyTextMustache()
+              .mustache
+            ).to.equals(expected)
+        })
+
+        it("array currency wrapped mustache text to mustache array currency text", () => {
+            const raw = `{{#heirinfo.legacy}}
+    <li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>
+{{/heirinfo.legacy}}`
+            const expected = `{{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;({{#funct.currencyNumberToText}}{{hargaBarang}}{{/funct.currencyNumberToText}})</li>{{/identitas.brangNadiar}}`
+            const template = new Template(raw)
+            expect(template
+              .toArrayCurrencyTextMustache()
+              .mustache
+            ).to.equals(expected)
         })
     })
 
@@ -486,6 +519,24 @@ describe("Integration test, two or more vars on template", () => {
           .toCurrencyNumberMustache()
           .toNumberTextMustache()
           .toNumberMustache()
+          .toArrayTextOrTextareaOrRadioOrDropdownMustache()
+          .toArrayCurrencyTextMustache()
+          .toArrayCurrencyMustache()
+          .mustache
+        ).to.equals(expected)
+    })
+
+    it("Test array mustache wrapped, currency and currency text to array mustache currancy and currency text", () => {
+        const raw = `{{#heirinfo.legacy}}
+    <li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa <mark class="template-variable2 identitas namaBarang" data-variable="namaBarang" data-vartype="text" data-question="nama barang" data-section="identitas" data-id="1" id="f4814e87-a08b-487d-850e-8dc45df4bfc8" data-prevtext="identitas.brangNadiar.namaBarang"><<identitas.brangNadiar.namaBarang>></mark>&nbsp;dengan harga<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="bb951a48-f45c-4dd1-a234-621f7cf4cfbb" data-prevtext="identitas.brangNadiar.hargaBarang"><<identitas.brangNadiar.hargaBarang>></mark>&nbsp;(<mark class="template-variable2 identitas hargaBarang" data-variable="hargaBarang" data-vartype="currency" data-question="harga barang" data-section="identitas" data-id="2" id="63ca8382-0fe8-4f70-98cb-ede73fd46de8" data-prevtext="identitas.brangNadiar.hargaBarang" data-numbertype="text"><<identitas.brangNadiar.hargaBarang.TERBILANG>></mark>)</li>
+{{/heirinfo.legacy}}`
+        const expected = `{{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa {{namaBarang}}&nbsp;dengan harga{{#funct.formatCurrencyNumber}}{{hargaBarang}}{{/funct.formatCurrencyNumber}}&nbsp;({{#funct.currencyNumberToText}}{{hargaBarang}}{{/funct.currencyNumberToText}})</li>{{/identitas.brangNadiar}}`
+        const template = new Template(raw)
+
+        expect(template
+          .toArrayTextOrTextareaOrRadioOrDropdownMustache()
+          .toArrayCurrencyTextMustache()
+          .toArrayCurrencyMustache()
           .mustache
         ).to.equals(expected)
     })
