@@ -75,7 +75,7 @@ export class Template implements ITemplate {
     }
 
     toDateMustache(format?: DateFormat): Template {
-        const re = /<mark\s+(?=[^<>]*?(?:data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.*?)(?:'|")){0,1})(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-section=(?:"|')(?<sectionName>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(?<variableName>\w+)(?:"|'))[^<>]*?>(?<innerText>[^<]*?<<\w+\.\w+>>[^>]*?)<\/mark>/gm
+        const re = /<mark\s+(?=(?:[^<>]*?data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.*?)(?:'|"))?)(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-section=(?:"|')(?<sectionName>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(?<variableName>\w+)(?:"|'))[^<>]*?>(?<innerText>[^<]*?<<\w+\.\w+>>[^>]*?)<\/mark>/gm
         const validDateFormat = new Set(["dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd", "yyyy/MM/dd", "MMMM dd, yyyy", "dd MMMM, yyyy", "dd mmmm yyyy"])
 
         let exp = null
@@ -226,26 +226,24 @@ export class Template implements ITemplate {
     }
 
     toArrayDateMustache(format?: DateFormat): Template {
-        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>date)(?:'|"))(?=[^<>]*?(?:data-date(?:f|F)ormat=(?:"|')(?<dateFormat>.*?)(?:"|'))?)[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        this._wrapArrayList()
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=(?:[^<>]*?data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.+?)(?:'|"))?)[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+>>[^<]*?<\/mark>)/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
+            const fullMatch = exp[0]
             const groups = exp["groups"] || {}
-            const openList = groups["openList"]
-            const closeList = groups["closeList"]
-            const arrayName = groups["varName"]
-            const markerTag = groups["markerTag"]
             const section = groups["section"]
-            const subVarName = groups["subVarName"]
-            const innerMark = groups["innerMark"]
+            const arrayName = groups["arrayName"]
+            const variable = groups["variable"]
             const dateFormat = groups["dateFormat"]
-            if (openList && closeList && arrayName && section && subVarName && innerMark) {
-                const validDateFormat = new Set(["dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd", "yyyy/MM/dd", "MMMM dd, yyyy", "dd MMMM, yyyy", "dd mmmm yyyy"])
-                const _f = validDateFormat.has(dateFormat || "") ? dateFormat : "dd mmmm yyyy"
-                const f = format || _f
-                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
-                this._mustache = this.mustache.replace(markerTag, `{{#funct.formatTime}}{{${subVarName}}}| ${f}{{/funct.formatTime}}`)
-                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            const innerMark = groups["innerMark"]
+
+            const validDateFormat = new Set(["dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd", "yyyy/MM/dd", "MMMM dd, yyyy", "dd MMMM, yyyy", "dd mmmm yyyy"])
+            const _f = validDateFormat.has(dateFormat || "") ? dateFormat : "dd mmmm yyyy"
+            const f = format || _f
+            if (fullMatch && section && arrayName && variable && innerMark) {
+                this._mustache = this.mustache.replace(fullMatch, `{{#funct.formatTime}}{{${variable}}}| ${f}{{/funct.formatTime}}`)
             }
         }
         return this

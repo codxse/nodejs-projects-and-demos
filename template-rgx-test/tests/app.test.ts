@@ -92,6 +92,14 @@ describe("Regex std vars to mustache test", () => {
               .to.equal(expected)
         })
 
+        it("dd-MM-yyyy", () => {
+            const raw = "<mark id=\"any-id\" class=\"any-class template-variable2\" data-id=\"15f44a53-f246-45e7-b422-41af68203197\" data-variable=\"date\" data-varType=\"date\" data-dateFormat=\"dd-MM-yyyy\" data-question=\"any string\" data-section=\"contractinfo\" data-prevtext=\"any string\"><<contractinfo.date>></mark>"
+            const template = new Template(raw)
+            const expected = "{{#funct.formatTime}}{{contractinfo.date}}| dd-MM-yyyy{{/funct.formatTime}}"
+            expect(template.toDateMustache().mustache)
+              .to.equal(expected)
+        })
+
         it("dd/MM/yyyy", () => {
             const raw = "<mark id=\"any-id\" class=\"any-class template-variable2\" data-id=\"15f44a53-f246-45e7-b422-41af68203197\" data-variable=\"date\" data-varType=\"date\" data-dateFormat=\"dd mmmm yyyy\" data-question=\"any string\" data-section=\"contractinfo\" data-prevtext=\"any string\"><<contractinfo.date>></mark>"
             const template = new Template(raw)
@@ -429,7 +437,13 @@ describe("Array var test", () => {
     describe("Array date", () => {
 
         it("dd-MM-yyyy", () => {
-            //throw new Error("Method not implemented.")
+            const raw = `<li data-varname="person" class="array" data-vartype="array" data-section="identitas">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-dateformat="dd-MM-yyyy" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-arrayName="person" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark></li>`
+            const expected = `{{#identitas.person}}<li data-varname="person" class="array" data-vartype="array" data-section="identitas">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: {{#funct.formatTime}}{{tglLahir}}| dd-MM-yyyy{{/funct.formatTime}}</li>{{/identitas.person}}`
+            const template = new Template(raw)
+            expect(template
+              .toArrayDateMustache()
+              .mustache
+            ).to.equals(expected)
         })
 
         it("dd/MM/yyyy", () => {
@@ -456,9 +470,9 @@ describe("Array var test", () => {
             //throw new Error("Method not implemented.")
         })
 
-        it("default date format as dd mmmm yyyy", () => {
-            const raw = `<li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-dateformat="sssr" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark></li>`
-            const expected = `{{#identitas.person}}<li data-varname="person" class="array" data-vartype="array">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: {{#funct.formatTime}}{{tglLahir}}| dd mmmm yyyy{{/funct.formatTime}}</li>{{/identitas.person}}`
+        it("default array date format as dd mmmm yyyy", () => {
+            const raw = `<li data-varname="person" class="array" data-vartype="array" data-section="identitas">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: <mark class="template-variable2 identitas" id="6647b16c-e9c8-4b71-87fa-937cf4179d58" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f8" data-dateformat="sssr" data-variable="tglLahir" data-vartype="date" data-question="Tgl lahir:" data-section="identitas" data-arrayName="person" data-prevtext="Nadiar"><<identitas.person.tglLahir>></mark></li>`
+            const expected = `{{#identitas.person}}<li data-varname="person" class="array" data-vartype="array" data-section="identitas">Nama: <mark class="template-variable2 identitas fullname" id="6647b16c-e9c8-4b71-87fa-937cf4179d57" data-id="7b3d7e12-7d2c-414e-80c5-60d5298cd0f2" data-variable="fullname" data-vartype="text" data-question="Nama" data-section="identitas" data-prevtext="Nadiar"><<identitas.person.fullname>></mark>, Tgl lahir: {{#funct.formatTime}}{{tglLahir}}| dd mmmm yyyy{{/funct.formatTime}}</li>{{/identitas.person}}`
             const template = new Template(raw)
             expect(template
               .toArrayDateMustache()
