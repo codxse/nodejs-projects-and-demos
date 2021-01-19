@@ -605,6 +605,26 @@ describe("Integration test, two or more vars on template", () => {
         ).to.equals(expected)
     })
 
+    it("Test complex array with std variable", async () => {
+        const raw = await readFile("/mock/04-min/raw.html")
+        const expected = await readFile("/mock/04-min/mustache.html")
+        const template = new Template(raw)
+        expect(template
+          .toTextOrTextareaOrRadioOrDropdownMustache()
+          .toDateMustache()
+          .toCurrencyTextMustache()
+          .toCurrencyNumberMustache()
+          .toNumberTextMustache()
+          .toNumberMustache()
+          .toArrayTextOrTextareaOrRadioOrDropdownMustache()
+          .toArrayCurrencyTextMustache()
+          .toArrayCurrencyMustache()
+          .toArrayNumberMustache()
+          .toArrayNumberTextMustache()
+          .toArrayDateMustache()
+          .mustache
+        ).to.equals(expected)
+    })
 })
 
 /**
