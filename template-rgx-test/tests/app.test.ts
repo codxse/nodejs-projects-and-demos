@@ -466,6 +466,16 @@ describe("Array var test", () => {
             ).to.equals(expected)
         })
     })
+
+    it("Array radio", () => {
+        const raw = `<li data-varname="items" class="array" data-vartype="array">text start <mark class="template-variable2 lainLain barang" data-variable="barang" data-vartype="text" data-question="barang?" data-section="lainLain" data-id="1" id="1ae6f203-e526-4cab-91af-640e21f0fe71" data-prevtext="lainLain.items.barang"><<lainLain.items.barang>></mark> text end</li>`
+        const expected = `{{#lainLain.items}}<li data-varname="items" class="array" data-vartype="array">text start {{barang}} text end</li>{{/lainLain.items}}`
+        const template = new Template(raw)
+        expect(template
+          .toArrayTextOrTextareaOrRadioOrDropdownMustache()
+          .mustache
+        ).equals(expected)
+    })
 })
 
 describe("Integration test, two or more vars on template", () => {
