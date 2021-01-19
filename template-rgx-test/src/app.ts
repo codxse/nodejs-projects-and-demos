@@ -150,88 +150,76 @@ export class Template implements ITemplate {
     }
 
     toArrayNumberMustache(): Template {
-        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>number)(?:'|"))(?=[^<>]*?(data-number(?:T|t)ype=(?:'|")number(?:'|"))?)[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        this._wrapArrayList()
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")number(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*(?:data-number(?:t|T)ype=(?:'|")number('|"))?)[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+>>[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
+            const fullMatch = exp[0]
             const groups = exp["groups"] || {}
-            const openList = groups["openList"]
-            const closeList = groups["closeList"]
-            const arrayName = groups["varName"]
-            const markerTag = groups["markerTag"]
             const section = groups["section"]
-            const subVarName = groups["subVarName"]
+            const arrayName = groups["arrayName"]
+            const variable = groups["variable"]
             const innerMark = groups["innerMark"]
-            if (openList && closeList && arrayName && section && subVarName && innerMark) {
-                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
-                this._mustache = this._mustache.replace(markerTag, `{{${subVarName}}}`)
-                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            if (fullMatch && section && arrayName && variable && innerMark) {
+                this._mustache = this._mustache.replace(fullMatch, `{{${variable}}}`)
             }
         }
         return this
     }
 
     toArrayNumberTextMustache(): Template {
-        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>number)(?:'|"))(?=[^<>]*?data-number(?:T|t)ype=(?:'|")text(?:'|"))[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+\.TERBILANG>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        this._wrapArrayList()
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")number(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*data-number(?:t|T)ype=(?:'|")text('|"))[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+\.TERBILANG>>[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
+            const fullMatch = exp[0]
             const groups = exp["groups"] || {}
-            const openList = groups["openList"]
-            const closeList = groups["closeList"]
-            const arrayName = groups["varName"]
-            const markerTag = groups["markerTag"]
             const section = groups["section"]
-            const subVarName = groups["subVarName"]
+            const arrayName = groups["arrayName"]
+            const variable = groups["variable"]
             const innerMark = groups["innerMark"]
-            if (openList && closeList && arrayName && section && subVarName && innerMark) {
-                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
-                this._mustache = this._mustache.replace(markerTag, `{{#funct.numberToText}}{{${subVarName}}}{{/funct.numberToText}}`)
-                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            if (fullMatch && section && arrayName && variable && innerMark) {
+                this._mustache = this._mustache.replace(fullMatch, `{{#funct.numberToText}}{{${variable}}}{{/funct.numberToText}}`)
             }
         }
         return this
     }
 
     toArrayCurrencyMustache(): Template {
-        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>currency)(?:'|"))(?=[^<>]*?(data-number(?:T|t)ype=(?:'|")number(?:'|"))?)[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        this._wrapArrayList()
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*(?:data-number(?:t|T)ype=(?:'|")number('|"))?)[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+>>[^<]*?<\/mark>)/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
+            const fullMatch = exp[0]
             const groups = exp["groups"] || {}
-            const openList = groups["openList"]
-            const closeList = groups["closeList"]
-            const arrayName = groups["varName"]
-            const markerTag = groups["markerTag"]
             const section = groups["section"]
-            const subVarName = groups["subVarName"]
+            const arrayName = groups["arrayName"]
+            const variable = groups["variable"]
             const innerMark = groups["innerMark"]
-            if (openList && closeList && arrayName && section && subVarName && innerMark) {
-                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
-                this._mustache = this._mustache.replace(markerTag, `{{#funct.formatCurrencyNumber}}{{${subVarName}}}{{/funct.formatCurrencyNumber}}`)
-                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            if (fullMatch && section && arrayName && variable && innerMark) {
+                this._mustache = this._mustache.replace(fullMatch, `{{#funct.formatCurrencyNumber}}{{${variable}}}{{/funct.formatCurrencyNumber}}`)
             }
         }
         return this
     }
 
     toArrayCurrencyTextMustache(): Template {
-        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>currency)(?:'|"))(?=[^<>]*?(data-number(?:T|t)ype=(?:'|")text(?:'|")))[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+\.TERBILANG>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        this._wrapArrayList()
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*data-number(?:t|T)ype=(?:'|")text(?:'|"))[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+\.TERBILANG>>[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
+            const fullMatch = exp[0]
             const groups = exp["groups"] || {}
-            const openList = groups["openList"]
-            const closeList = groups["closeList"]
-            const arrayName = groups["varName"]
-            const markerTag = groups["markerTag"]
             const section = groups["section"]
-            const subVarName = groups["subVarName"]
+            const arrayName = groups["arrayName"]
+            const variable = groups["variable"]
             const innerMark = groups["innerMark"]
-            if (openList && closeList && arrayName && section && subVarName && innerMark) {
-                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
-                this._mustache = this._mustache.replace(markerTag, `{{#funct.currencyNumberToText}}{{${subVarName}}}{{/funct.currencyNumberToText}}`)
-                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            if (fullMatch && section && arrayName && variable && innerMark) {
+                this._mustache = this._mustache.replace(fullMatch, `{{#funct.currencyNumberToText}}{{${variable}}}{{/funct.currencyNumberToText}}`)
             }
         }
         return this
@@ -264,24 +252,42 @@ export class Template implements ITemplate {
     }
 
     toArrayTextOrTextareaOrRadioOrDropdownMustache(): Template {
-        const re = /(?<=(?<openList>(?:{{[^<]*?\s*)?<li))(?:\s+(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(?<varName>\w+)(?:'|"))(?=[^<>]*?class=(?:'|").*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?)(?<markerTag><mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<subVarName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<subVarType>text|textarea|radio|dropdown)(?:'|"))[^>]*>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?)<\/mark>)(?=.*?(?<closeList><\/li>(?:\s*?[^<]*?}})?))/gm
+        this._wrapArrayList()
+        this._toInnerArrayTextOrTextareaOrRadioOrDropdownMustache()
+        return this
+    }
+
+    private _toInnerArrayTextOrTextareaOrRadioOrDropdownMustache(): void {
+        const re =/<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<varType>text|textarea|radio|dropdown)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?<\/mark>)/gm
+        let exp1 = null
+        const mustache = this.mustache
+        while ((exp1 = re.exec(mustache)) != null) {
+            const fullMatch = exp1[0]
+            const groups = exp1["groups"] || {}
+            const section = groups["section"]
+            const arrayName = groups["arrayName"]
+            const varType = groups["varType"]
+            const variable = groups["variable"]
+            if (fullMatch && section && arrayName && varType && variable) {
+                this._mustache = this.mustache.replace(fullMatch, `{{${variable}}}`)
+            }
+        }
+    }
+
+    private _wrapArrayList(): void {
+        const re = /((?:(?:{{#\w+\.\w+}})(?:\s+|))?<li\s+)?(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(\w+)(?:'|"))(?=[^<>]*?class=(?:"|').*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?(<\/li>(?:(?:\s+|){{\/\w+\.\w+}})?)/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
-            const groups = exp["groups"] || {}
-            const openList = groups["openList"]
-            const closeList = groups["closeList"]
-            const arrayName = groups["varName"]
-            const markerTag = groups["markerTag"]
-            const section = groups["section"]
-            const subVarName = groups["subVarName"]
-            const innerMark = groups["innerMark"]
-            if (openList && closeList && arrayName && section && subVarName && innerMark) {
-                this._mustache = this.mustache.replace(openList, `{{#${section}.${arrayName}}}<li`)
-                this._mustache = this.mustache.replace(markerTag, `{{${subVarName}}}`)
-                this._mustache = this.mustache.replace(closeList, `</li>{{/${section}.${arrayName}}}`)
+            const fullMatch = exp[0]
+            const openingTag = exp[1]
+            const section = exp[2]
+            const variable = exp[3]
+            const closeTag = exp[4]
+            if (fullMatch && openingTag && section && variable) {
+                this._mustache = this.mustache.replace(openingTag, `{{#${section}.${variable}}}<li `)
+                this._mustache = this.mustache.replace(closeTag, `</li>{{/${section}.${variable}}}`)
             }
         }
-        return this
     }
 }

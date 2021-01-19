@@ -1,6 +1,6 @@
 1<p>Halo nama saya {{identitas.fullname}}, berikut barang-barang punya saya:</p>
 <ol>
-    {{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array">barang {{identitas.fullname}}&nbsp;berupa {{namaBarang}}&nbsp;dengan harga{{#funct.formatCurrencyNumber}}{{hargaBarang}}{{/funct.formatCurrencyNumber}}&nbsp;({{#funct.currencyNumberToText}}{{hargaBarang}}{{/funct.currencyNumberToText}})</li>{{/identitas.brangNadiar}}
+    {{#identitas.brangNadiar}}<li data-varname="brangNadiar" class="array" data-vartype="array" data-section="identitas">barang {{identitas.fullname}}&nbsp;berupa {{namaBarang}}&nbsp;dengan harga{{#funct.formatCurrencyNumber}}{{hargaBarang}}{{/funct.formatCurrencyNumber}}&nbsp;({{#funct.currencyNumberToText}}{{hargaBarang}}{{/funct.currencyNumberToText}})</li>{{/identitas.brangNadiar}}
 </ol>
 <p><br></p>
 <p><br></p>
