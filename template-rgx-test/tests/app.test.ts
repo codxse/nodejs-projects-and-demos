@@ -625,6 +625,20 @@ describe("Integration test, two or more vars on template", () => {
           .mustache
         ).to.equals(expected)
     })
+
+    it("Rich HTML test", async () => {
+        const raw = await readFile("/mock/05-rich-html/raw.html")
+        const expected = await readFile("/mock/05-rich-html/mustache.html")
+        const template = new Template(raw)
+        const mustache = template
+          .toTextOrTextareaOrRadioOrDropdownMustache()
+          .mustache
+        // fs.writeFile(__dirname + "/FILE.html", mustache, (err) => {
+        //     console.log(err)
+        // })
+        expect(mustache
+        ).to.equals(expected)
+    })
 })
 
 /**
