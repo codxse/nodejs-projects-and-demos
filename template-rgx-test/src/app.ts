@@ -37,7 +37,7 @@ export class Template implements ITemplate {
     }
 
     toCurrencyNumberMustache(): Template {
-        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?(?:data-number(?:t|T)ype=(?:'|")number(?:'|")){0,1})(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?<<\w+\.\w+>>[^>]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?(?:data-number(?:t|T)ype=(?:'|")number(?:'|")){0,1})(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?(?:&lt;&lt;|<<)\w+\.\w+(?:&gt;&gt;|>>)[^>]*?)<\/mark>/gm
 
         let exp = null
         const mustache = this.mustache
@@ -57,7 +57,7 @@ export class Template implements ITemplate {
     }
 
     toCurrencyTextMustache(): Template {
-        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-number(?:t|T)ype=(?:'|")text(?:'|"))(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?<<\w+\.\w+\.TERBILANG>>[^>]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-number(?:t|T)ype=(?:'|")text(?:'|"))(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.TERBILANG(?:&gt;&gt;|>>)[^>]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -75,7 +75,7 @@ export class Template implements ITemplate {
     }
 
     toDateMustache(format?: DateFormat): Template {
-        const re = /<mark\s+(?=(?:[^<>]*?data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.*?)(?:'|"))?)(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-section=(?:"|')(?<sectionName>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(?<variableName>\w+)(?:"|'))[^<>]*?>(?<innerText>[^<]*?<<\w+\.\w+>>[^>]*?)<\/mark>/gm
+        const re = /<mark\s+(?=(?:[^<>]*?data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.*?)(?:'|"))?)(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-section=(?:"|')(?<sectionName>\w+)(?:'|"))(?=[^<>]*?data-variable=(?:"|')(?<variableName>\w+)(?:"|'))[^<>]*?>(?<innerText>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+(?:&gt;&gt;|>>)[^>]*?)<\/mark>/gm
         const validDateFormat = new Set(["dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd", "yyyy/MM/dd", "MMMM dd, yyyy", "dd MMMM, yyyy", "dd mmmm yyyy"])
 
         let exp = null
@@ -95,7 +95,7 @@ export class Template implements ITemplate {
     }
 
     toNumberMustache(): Template {
-        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable2.*?(?:"|'))(?=[^<>]*?data-var(?:t|T)ype=(?:"|')number(?:"|'))(?=[^<>]*?(?:number(?:t|T)ype=(?:"|')number(?:"|')){0,1})(?=[^<>]*?data-section="(\w+)")(?=[^<>]*?data-variable="(\w+)")[^>]*?>([^<]*?<<\w+\.\w+>>[^<]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable2.*?(?:"|'))(?=[^<>]*?data-var(?:t|T)ype=(?:"|')number(?:"|'))(?=[^<>]*?(?:number(?:t|T)ype=(?:"|')number(?:"|')){0,1})(?=[^<>]*?data-section="(\w+)")(?=[^<>]*?data-variable="(\w+)")[^>]*?>([^<]*?(?:&lt;&lt;|<<)\w+\.\w+(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -113,7 +113,7 @@ export class Template implements ITemplate {
     }
 
     toNumberTextMustache(): Template {
-        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable2.*?(?:"|'))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')number(?:"|'))(?=[^<>]*?number(?:t|T)ype=(?:"|')text(?:"|'))(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(\w+)(?:'|"))[^>]*?>([^<]*?<<\w+\.\w+\.TERBILANG>>[^<]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable2.*?(?:"|'))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')number(?:"|'))(?=[^<>]*?number(?:t|T)ype=(?:"|')text(?:"|'))(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(\w+)(?:'|"))[^>]*?>([^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.TERBILANG(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -131,7 +131,7 @@ export class Template implements ITemplate {
     }
 
     toTextOrTextareaOrRadioOrDropdownMustache(): Template {
-        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable.*?(?:'|"))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')(text|textarea|radio|dropdown)(?:"|'))(?=[^<>]*?data-section=(?:"|')(\w+)(?:"|'))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?<<\w+\.\w+>>[^<]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable.*?(?:'|"))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')(text|textarea|radio|dropdown)(?:"|'))(?=[^<>]*?data-section=(?:"|')(\w+)(?:"|'))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?(?:&lt;&lt;|<<)\w+\.\w+(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -151,7 +151,7 @@ export class Template implements ITemplate {
 
     toArrayNumberMustache(): Template {
         this._wrapArrayList()
-        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")number(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*(?:data-number(?:t|T)ype=(?:'|")number('|"))?)[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+>>[^<]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")number(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*(?:data-number(?:t|T)ype=(?:'|")number('|"))?)[^>]*?>(?<innerMark>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.\w+(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -170,7 +170,7 @@ export class Template implements ITemplate {
 
     toArrayNumberTextMustache(): Template {
         this._wrapArrayList()
-        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")number(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*data-number(?:t|T)ype=(?:'|")text('|"))[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+\.TERBILANG>>[^<]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")number(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*data-number(?:t|T)ype=(?:'|")text('|"))[^>]*?>(?<innerMark>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.\w+\.TERBILANG(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -189,7 +189,7 @@ export class Template implements ITemplate {
 
     toArrayCurrencyMustache(): Template {
         this._wrapArrayList()
-        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*(?:data-number(?:t|T)ype=(?:'|")number('|"))?)[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+>>[^<]*?<\/mark>)/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*(?:data-number(?:t|T)ype=(?:'|")number('|"))?)[^>]*?>(?<innerMark>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.\w+(?:&gt;&gt;|>>)[^<]*?<\/mark>)/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -208,7 +208,7 @@ export class Template implements ITemplate {
 
     toArrayCurrencyTextMustache(): Template {
         this._wrapArrayList()
-        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*data-number(?:t|T)ype=(?:'|")text(?:'|"))[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+\.TERBILANG>>[^<]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")currency(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=[^<>]*data-number(?:t|T)ype=(?:'|")text(?:'|"))[^>]*?>(?<innerMark>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.\w+\.TERBILANG(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -227,7 +227,7 @@ export class Template implements ITemplate {
 
     toArrayDateMustache(format?: DateFormat): Template {
         this._wrapArrayList()
-        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=(?:[^<>]*?data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.+?)(?:'|"))?)[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+\.\w+>>[^<]*?<\/mark>)/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")date(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))(?=(?:[^<>]*?data-date(?:f|F)ormat=(?:'|")(?<dateFormat>.+?)(?:'|"))?)[^>]*?>(?<innerMark>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.\w+(?:&gt;&gt;|>>)[^<]*?<\/mark>)/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
@@ -256,7 +256,7 @@ export class Template implements ITemplate {
     }
 
     private _toInnerArrayTextOrTextareaOrRadioOrDropdownMustache(): void {
-        const re =/<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<varType>text|textarea|radio|dropdown)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))[^>]*?>(?<innerMark>[^<]*?<<\w+\.\w+.\w+>>[^<]*?<\/mark>)/gm
+        const re =/<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")(?<varType>text|textarea|radio|dropdown)(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))[^>]*?>(?<innerMark>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.\w+(?:&gt;&gt;|>>)[^<]*?<\/mark>)/gm
         let exp1 = null
         const mustache = this.mustache
         while ((exp1 = re.exec(mustache)) != null) {

@@ -626,6 +626,17 @@ describe("Integration test, two or more vars on template", () => {
         ).to.equals(expected)
     })
 
+    it("Name, radio, and dropdown array", () => {
+        const raw = `<br><ul><li data-varname="Identitas" class="array" data-vartype="array" data-section="firstparty">Nama <mark class="template-variable2 firstparty name" data-variable="name" data-vartype="text" data-question="Siapakah nama pihak Kesatu?" data-section="firstparty" data-id="600e368836274d0fa36af59a" id="0811b20e-28d2-48a1-8a9f-9d6ae72ec550" data-prevtext="firstparty.name"><<firstparty.name>></mark> , suku <mark class="template-variable2 firstparty suku" data-variable="suku" data-vartype="dropdown" data-question="Suku" data-section="firstparty" data-id="2" id="3e9b8454-7f24-4217-b579-94776aa80682" data-prevtext="firstparty.Identitas.suku" data-arrayname="Identitas"><<firstparty.Identitas.suku>></mark> , jenis kemalin <mark class="template-variable2 firstparty jenisKelamin" data-variable="jenisKelamin" data-vartype="radio" data-question="Ras" data-section="firstparty" data-id="1" id="1a1c5745-ce20-4558-92da-0184ca46065b" data-prevtext="firstparty.Identitas.jenisKelamin" data-arrayname="Identitas"><<firstparty.Identitas.jenisKelamin>></mark>&nbsp;</li></ul>`
+        const expected = `<br><ul>{{#firstparty.Identitas}}<li data-varname="Identitas" class="array" data-vartype="array" data-section="firstparty">Nama {{firstparty.name}} , suku {{suku}} , jenis kemalin {{jenisKelamin}}&nbsp;</li>{{/firstparty.Identitas}}</ul>`
+        const template = new Template(raw)
+        const mustache = template
+          .toTextOrTextareaOrRadioOrDropdownMustache()
+          .toArrayTextOrTextareaOrRadioOrDropdownMustache()
+          .mustache
+        expect(mustache).to.equals(expected)
+    })
+
     it("Rich HTML test", async () => {
         const raw = await readFile("/mock/05-rich-html/raw.html")
         const expected = await readFile("/mock/05-rich-html/mustache.html")
