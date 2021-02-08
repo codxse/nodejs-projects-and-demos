@@ -295,22 +295,4 @@ export class Template implements ITemplate {
             }
         }
     }
-
-    // private _wrapArrayList2() {
-    //     return
-    //     const re = /((?:(?:{{#\w+\.\w+}})(?:\s+|))+<li\s+)?(?=[^<>]*?data-section=(?:'|")(\w+)(?:'|"))(?=[^<>]*?data-var(?:n|N)ame=(?:'|")(\w+)(?:'|"))(?=[^<>]*?class=(?:"|').*?array.*?(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")array(?:'|"))[^>]*?>.*?(<\/li>(?:(?:\s+|){{\/\w+\.\w+}})+)/gm
-    //     let exp = null
-    //     const mustache = this.mustache
-    //     while ((exp = re.exec(mustache)) != null) {
-    //         const fullMatch = exp[0]
-    //         const openingTag = exp[1]
-    //         const section = exp[2]
-    //         const variable = exp[3]
-    //         const closeTag = exp[4]
-    //         if (fullMatch && openingTag && section && variable) {
-    //             this._mustache = this.mustache.replace(openingTag, `{{#${section}.${variable}}}<li `)
-    //             this._mustache = this.mustache.replace(closeTag, `</li>{{/${section}.${variable}}}`)
-    //         }
-    //     }
-    // }
 }

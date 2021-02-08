@@ -653,7 +653,7 @@ describe("Integration test, two or more vars on template", () => {
 
     it("Escaped html test", () => {
         const raw = `<p> SURAT PENGUNDURAN DIRI</p><p>dad, hari Rabu tanggal 01 bulan Januari tahun 2020 Kepada Yth,</p><p>Direktur PT. dad</p><p>Yang beralamat di, adasd</p><p>Dengan Hormat,</p><ol><li>Nama barang: PS5 Harga 8.7</li><li data-section="lainLain" data-varname="harga_75c34495af23" data-vartype="array" class="array">Nama barang&nbsp;<mark data-variable="nama_a688dcc438b7" data-vartype="text" data-section="lainLain" data-arrayname="barang_ce307f0a78f5" class="template-variable2 lainLain nama_a688dcc438b7" contenteditable="false">&lt;&lt;lainLain.barang_ce307f0a78f5.nama_a688dcc438b7&gt;&gt;</mark> harga&nbsp;<mark data-variable="harga_75c34495af23" data-vartype="currency" data-section="lainLain" data-numbertype="" class="template-variable2 lainLain harga_75c34495af23" data-arrayname="barang_ce307f0a78f5" contenteditable="false">&lt;&lt;lainLain.barang_ce307f0a78f5.harga_75c34495af23&gt;&gt;</mark></li></ol><p>No.</p><p>Karyawan</p><p>: adasdsad</p><p>Melalui surat ini, saya sebagai salah satu seorang karyawan PT. dad, berdasarkan perjanjian kerja antara karyawan dengan perusahaan serta berdasarkan Undang-Undang No.13 Tahun 2003 tentang Ketenagakerjaan, maka dengan segala hormat saya yang bertanda tangan dibawah ini menyatakan sebagai berikut:</p><p>Bermaksud hendak mengajukan permohonan pengunduran diri dari PT. dad dengan alasan adasd. Berdasarkan perjanjian kerja tanggal 02 bulanJanuari tahun 2020 yang mengatur mengenai pemberitahuan tertulis pengunduran diri, maka saya akan efektif berhenti bekerja pada tanggal 29 bulanJanuari tahun 2021. Mohon maaf apabila saya pernah melakukan kesalahan selama saya bekerja baik yang disengaja maupun yang tidak disengaja.</p><p>Demikianlah surat ini saya buat dalam keadaan sadar dan tanpa adanya paksaan dari pihak manapun. Terima kasih atas pengertian bapak/ibu.</p><p>Hormat saya,</p><p>adasdsad</p>`
-        const expected = `<p> SURAT PENGUNDURAN DIRI</p><p>dad, hari Rabu tanggal 01 bulan Januari tahun 2020 Kepada Yth,</p><p>Direktur PT. dad</p><p>Yang beralamat di, adasd</p><p>Dengan Hormat,</p><ol><li>Nama barang: PS5 Harga 8.7</li>{{/lainLain.harga_75c34495af23}}{{/lainLain.harga_75c34495af23}}{{/lainLain.harga_75c34495af23}}{{/lainLain.harga_75c34495af23}}{{/lainLain.harga_75c34495af23}}{{/lainLain.harga_75c34495af23}}{{#lainLain.harga_75c34495af23}}<li data-section="lainLain" data-varname="harga_75c34495af23" data-vartype="array" class="array">Nama barang&nbsp;{{nama_a688dcc438b7}} harga&nbsp;{{#funct.formatCurrencyNumber}}{{harga_75c34495af23}}{{/funct.formatCurrencyNumber}}</li></ol><p>No.</p><p>Karyawan</p><p>: adasdsad</p><p>Melalui surat ini, saya sebagai salah satu seorang karyawan PT. dad, berdasarkan perjanjian kerja antara karyawan dengan perusahaan serta berdasarkan Undang-Undang No.13 Tahun 2003 tentang Ketenagakerjaan, maka dengan segala hormat saya yang bertanda tangan dibawah ini menyatakan sebagai berikut:</p><p>Bermaksud hendak mengajukan permohonan pengunduran diri dari PT. dad dengan alasan adasd. Berdasarkan perjanjian kerja tanggal 02 bulanJanuari tahun 2020 yang mengatur mengenai pemberitahuan tertulis pengunduran diri, maka saya akan efektif berhenti bekerja pada tanggal 29 bulanJanuari tahun 2021. Mohon maaf apabila saya pernah melakukan kesalahan selama saya bekerja baik yang disengaja maupun yang tidak disengaja.</p><p>Demikianlah surat ini saya buat dalam keadaan sadar dan tanpa adanya paksaan dari pihak manapun. Terima kasih atas pengertian bapak/ibu.</p><p>Hormat saya,</p><p>adasdsad</p>`
+        const expected = `<p> SURAT PENGUNDURAN DIRI</p><p>dad, hari Rabu tanggal 01 bulan Januari tahun 2020 Kepada Yth,</p><p>Direktur PT. dad</p><p>Yang beralamat di, adasd</p><p>Dengan Hormat,</p><ol><li>Nama barang: PS5 Harga 8.7</li>{{#lainLain.harga_75c34495af23}}<li data-section="lainLain" data-varname="harga_75c34495af23" data-vartype="array" class="array">Nama barang&nbsp;{{nama_a688dcc438b7}} harga&nbsp;{{#funct.formatCurrencyNumber}}{{harga_75c34495af23}}{{/funct.formatCurrencyNumber}}</li>{{/lainLain.harga_75c34495af23}}</ol><p>No.</p><p>Karyawan</p><p>: adasdsad</p><p>Melalui surat ini, saya sebagai salah satu seorang karyawan PT. dad, berdasarkan perjanjian kerja antara karyawan dengan perusahaan serta berdasarkan Undang-Undang No.13 Tahun 2003 tentang Ketenagakerjaan, maka dengan segala hormat saya yang bertanda tangan dibawah ini menyatakan sebagai berikut:</p><p>Bermaksud hendak mengajukan permohonan pengunduran diri dari PT. dad dengan alasan adasd. Berdasarkan perjanjian kerja tanggal 02 bulanJanuari tahun 2020 yang mengatur mengenai pemberitahuan tertulis pengunduran diri, maka saya akan efektif berhenti bekerja pada tanggal 29 bulanJanuari tahun 2021. Mohon maaf apabila saya pernah melakukan kesalahan selama saya bekerja baik yang disengaja maupun yang tidak disengaja.</p><p>Demikianlah surat ini saya buat dalam keadaan sadar dan tanpa adanya paksaan dari pihak manapun. Terima kasih atas pengertian bapak/ibu.</p><p>Hormat saya,</p><p>adasdsad</p>`
         const template = new Template(raw)
         expect(template
           .toTextOrTextareaOrRadioOrDropdownMustache()
@@ -672,43 +672,19 @@ describe("Integration test, two or more vars on template", () => {
         ).to.equals(expected)
     })
 
-    it("Array test multi", () => {
-        const raw = `<p>This will be array vars</p>
-<ul>
-<li class="array" data-section="nadiar_qze8836501eb9a" data-varname="identity_qz4e298a2e6e26" data-vartype="array">nama&nbsp;<mark class="template-variable2 nadiar_qze8836501eb9a nama_qz973e6e4bd4df" contenteditable="false" data-variable="nama_qz973e6e4bd4df" data-vartype="text" data-section="nadiar_qze8836501eb9a" data-arrayname="identity_qz4e298a2e6e26">&lt;&lt;nadiar.identity.nama&gt;&gt;</mark>, umur&nbsp;<mark class="template-variable2 nadiar_qze8836501eb9a umur_qza71b3bbbff01" contenteditable="false" data-variable="umur_qza71b3bbbff01" data-vartype="number" data-section="nadiar_qze8836501eb9a" data-numbertype="number" data-arrayname="identity_qz4e298a2e6e26">&lt;&lt;nadiar.identity.umur&gt;&gt;</mark> (<mark class="template-variable2 nadiar_qze8836501eb9a umur_qza71b3bbbff01" contenteditable="false" data-variable="umur_qza71b3bbbff01" data-vartype="number" data-section="nadiar_qze8836501eb9a" data-numbertype="text" data-arrayname="identity_qz4e298a2e6e26">&lt;&lt;nadiar.identity.umur.TERBILANG&gt;&gt;</mark>). Harga&nbsp;<mark class="template-variable2 nadiar_qze8836501eb9a harga_qz17bd87c635f6" contenteditable="false" data-variable="harga_qz17bd87c635f6" data-vartype="currency" data-section="nadiar_qze8836501eb9a" data-numbertype="number" data-arrayname="identity_qz4e298a2e6e26">&lt;&lt;nadiar.identity.harga&gt;&gt;</mark> (<mark class="template-variable2 nadiar_qze8836501eb9a harga_qz17bd87c635f6" contenteditable="false" data-variable="harga_qz17bd87c635f6" data-vartype="currency" data-section="nadiar_qze8836501eb9a" data-numbertype="text" data-arrayname="identity_qz4e298a2e6e26">&lt;&lt;nadiar.identity.harga.TERBILANG&gt;&gt;</mark>). Alamat:&nbsp;<mark class="template-variable2 nadiar_qze8836501eb9a alamat_qz1281911e2ded" contenteditable="false" data-variable="alamat_qz1281911e2ded" data-vartype="textarea" data-section="nadiar_qze8836501eb9a" data-arrayname="identity_qz4e298a2e6e26">&lt;&lt;nadiar.identity.alamat&gt;&gt;</mark></li>
-<li class="array" data-section="nadiar_qze8836501eb9a" data-varname="identity_qz4e298a2e6e26" data-vartype="array">Aku adalah arjuna<code></code></li>
-</ul>`
-        const expected = `<p>This will be array vars</p>
-<ul>
-{{#nadiar_qze8836501eb9a.identity_qz4e298a2e6e26}}<li class="array" data-section="nadiar_qze8836501eb9a" data-varname="identity_qz4e298a2e6e26" data-vartype="array">nama&nbsp;{{nama_qz973e6e4bd4df}}, umur&nbsp;{{umur_qza71b3bbbff01}} ({{#funct.numberToText}}{{umur_qza71b3bbbff01}}{{/funct.numberToText}}). Harga&nbsp;{{#funct.formatCurrencyNumber}}{{harga_qz17bd87c635f6}}{{/funct.formatCurrencyNumber}} ({{#funct.currencyNumberToText}}{{harga_qz17bd87c635f6}}{{/funct.currencyNumberToText}}). Alamat:&nbsp;{{alamat_qz1281911e2ded}}</li>{{/nadiar_qze8836501eb9a.identity_qz4e298a2e6e26}}
-<li class="array" data-section="nadiar_qze8836501eb9a" data-varname="identity_qz4e298a2e6e26" data-vartype="array">Aku adalah arjuna<code></code></li>
-</ul>`
-        const template = new Template(raw)
-        expect(template
-          .toTextOrTextareaOrRadioOrDropdownMustache()
-          .toDateMustache()
-          .toCurrencyTextMustache()
-          .toCurrencyNumberMustache()
-          .toNumberTextMustache()
-          .toNumberMustache()
-          .toArrayTextOrTextareaOrRadioOrDropdownMustache()
-          .toArrayCurrencyTextMustache()
-          .toArrayCurrencyMustache()
-          .toArrayNumberMustache()
-          .toArrayNumberTextMustache()
-          .toArrayDateMustache()
-          .mustache
-        ).to.equals(expected)
-    })
-
-    it("Array test multi2", () => {
+    it("Test multi value array", () => {
         const raw = `<p>EDIT ME!!.. Halo nama saya nadiar</p>
 <ul>
 <li>Nama nadiar</li>
 <li class="array" data-section="unlisted" data-varname="identitas_qz946df61286d8" data-vartype="array">list nama:&nbsp;<mark class="template-variable2 unlisted name_qz1bb8edeaff06" contenteditable="false" data-variable="name_qz1bb8edeaff06" data-vartype="text" data-section="unlisted" data-arrayname="identitas_qz946df61286d8">&lt;&lt;unlisted.identitas.name&gt;&gt;</mark>, alamat:&nbsp;<mark class="template-variable2 unlisted address_qz0ff4a0a57be6" contenteditable="false" data-variable="address_qz0ff4a0a57be6" data-vartype="textarea" data-section="unlisted" data-arrayname="identitas_qz946df61286d8">&lt;&lt;unlisted.identitas.address&gt;&gt;</mark>, umur:&nbsp;<mark class="template-variable2 unlisted age_qzb4575d667b5b" contenteditable="false" data-variable="age_qzb4575d667b5b" data-vartype="number" data-section="unlisted" data-numbertype="number" data-arrayname="identitas_qz946df61286d8">&lt;&lt;unlisted.identitas.age&gt;&gt;</mark> (<mark class="template-variable2 unlisted age_qzb4575d667b5b" contenteditable="false" data-variable="age_qzb4575d667b5b" data-vartype="number" data-section="unlisted" data-numbertype="text" data-arrayname="identitas_qz946df61286d8">&lt;&lt;unlisted.identitas.age.TERBILANG&gt;&gt;</mark>), harta:&nbsp;<mark class="template-variable2 unlisted welth_qzae3d3954b269" contenteditable="false" data-variable="welth_qzae3d3954b269" data-vartype="currency" data-section="unlisted" data-numbertype="number" data-arrayname="identitas_qz946df61286d8">&lt;&lt;unlisted.identitas.welth&gt;&gt;</mark> (<mark class="template-variable2 unlisted welth_qzae3d3954b269" contenteditable="false" data-variable="welth_qzae3d3954b269" data-vartype="currency" data-section="unlisted" data-numbertype="text" data-arrayname="identitas_qz946df61286d8">&lt;&lt;unlisted.identitas.welth.TERBILANG&gt;&gt;</mark>) oke terima kasih.</li>
 <li>end</li>
 </ul>`
-        const expected = `1`
+        const expected = `<p>EDIT ME!!.. Halo nama saya nadiar</p>
+<ul>
+<li>Nama nadiar</li>
+{{#unlisted.identitas_qz946df61286d8}}<li class="array" data-section="unlisted" data-varname="identitas_qz946df61286d8" data-vartype="array">list nama:&nbsp;{{name_qz1bb8edeaff06}}, alamat:&nbsp;{{address_qz0ff4a0a57be6}}, umur:&nbsp;{{age_qzb4575d667b5b}} ({{#funct.numberToText}}{{age_qzb4575d667b5b}}{{/funct.numberToText}}), harta:&nbsp;{{#funct.formatCurrencyNumber}}{{welth_qzae3d3954b269}}{{/funct.formatCurrencyNumber}} ({{#funct.currencyNumberToText}}{{welth_qzae3d3954b269}}{{/funct.currencyNumberToText}}) oke terima kasih.</li>{{/unlisted.identitas_qz946df61286d8}}
+<li>end</li>
+</ul>`
         const template = new Template(raw)
         expect(template
           .toTextOrTextareaOrRadioOrDropdownMustache()
@@ -726,6 +702,7 @@ describe("Integration test, two or more vars on template", () => {
           .mustache
         ).to.equals(expected)
     })
+
 })
 
 /**
