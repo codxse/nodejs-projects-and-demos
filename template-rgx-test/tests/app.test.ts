@@ -282,7 +282,7 @@ describe("Regex std vars to mustache test", () => {
         })
     })
 
-    describe("text|textarea|dropdown|radio to mustache", () => {
+    describe("text|textarea|dropdown|radio|formula to mustache", () => {
         const vars = ["text", "textarea", "dropdown", "radio"]
         it("varType text|textarea|dropdown|radio to mustache", () => {
             const index = Math.floor(Math.random() * 4)
@@ -318,6 +318,15 @@ describe("Regex std vars to mustache test", () => {
             const raw = `<mark class="template-variable2 any-class" id="any-id" data-id="15f44a53-f246-45e7-b422-41af68203197" data-variable="name " data-varType="${vars[index]}" data-question="any string" data-section="employee" data-prevtext="any string"><<contractinfo.date>></mark>`
             const template = new Template(raw)
             expect(template.toTextOrTextareaOrRadioOrDropdownMustache().mustache + ` (${vars[index]})`).to.equal(raw + ` (${vars[index]})`)
+        })
+
+        it("formula to mustache", () => {
+            const raw = `<mark class="template-variable2 unlisted uang_saku_tambah_1000_qz34dde2537689" title="uang saku tambah 1000" contenteditable="false" data-variable="uang_saku_tambah_1000_qz34dde2537689" data-vartype="formula" data-section="unlisted">&lt;&lt;unlisted.uang_saku_tambah_1000&gt;&gt;</mark>`
+            const template = new Template(raw)
+            expect(template
+              .toTextOrTextareaOrRadioOrDropdownMustache()
+              .mustache
+            ).to.equal("{{unlisted.uang_saku_tambah_1000_qz34dde2537689}}")
         })
     })
 

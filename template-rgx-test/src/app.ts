@@ -131,7 +131,7 @@ export class Template implements ITemplate {
     }
 
     toTextOrTextareaOrRadioOrDropdownMustache(): Template {
-        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable.*?(?:'|"))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')(text|textarea|radio|dropdown)(?:"|'))(?=[^<>]*?data-section=(?:"|')(\w+)(?:"|'))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?(?:&lt;&lt;|<<)\w+\.\w+(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
+        const re = /<mark\s+(?=[^<>]*?class=(?:"|').*?template-variable.*?(?:'|"))(?=[^<>]*?data-var(?:T|t)ype=(?:"|')(text|textarea|radio|dropdown|formula)(?:"|'))(?=[^<>]*?data-section=(?:"|')(\w+)(?:"|'))(?=[^<>]*?data-variable=(?:"|')(\w+)(?:"|'))[^>]*?>([^<]*?(?:&lt;&lt;|<<)\w+\.\w+(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
         let exp = null
         const mustache = this.mustache
         while ((exp = re.exec(mustache)) != null) {
