@@ -48,7 +48,7 @@ export class LambdaParser implements IFormulaParser {
   }
 
   private aggregateExpression(rawLambda: string, aggregateFunction: string): string {
-    const _re = `${aggregateFunction}\\((\\w+)\\.(\\w+)\\)`
+    const _re = `${aggregateFunction}\\(\\s?(\\w+)\\.(\\w+)\\s?\\)`
     const re = new RegExp(_re, "gm")
     let exp = null
     const lambda = rawLambda

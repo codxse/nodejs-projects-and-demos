@@ -140,4 +140,12 @@ describe("Array variables", () => {
     const expected = 2
     expect(should).to.equal(expected)
   })
+
+  it("SUM lambda with space", () => {
+    const scope = {"document.name":"Untitled","document.title":"Test Formula 1","unlisted.satu_qz77fc8182562e":"1","unlisted.dua_qz31f3a11aa307":"2","unlisted.uang_saya_qz20ff90468401":[{"uang_jajan_qz40737881d382":"1"},{"uang_jajan_qz40737881d382":"2"}]}
+    const parser = new LambdaParser("SUM( uang_saya_qz20ff90468401.uang_jajan_qz40737881d382 )", scope)
+    const should = parser.evaluate()
+    const expected = 3
+    expect(should).to.equal(expected)
+  })
 })
