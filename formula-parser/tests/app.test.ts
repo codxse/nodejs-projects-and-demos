@@ -114,16 +114,30 @@ describe("Invalid variable throwing error", () => {
 
 describe("Array variables", () => {
   it("SUM", () => {
+    const parser = new LambdaParser("SUM(1,2,3)", VALUES)
+    const should = parser.evaluate()
+    const expected = 6
+    expect(should).to.equal(expected)
+  })
+
+  it("SUM VARS ARR", () => {
     const parser = new LambdaParser("SUM(Keluarga_qz9fe7fdbb683d.Jumlah_anak_qzb42b12e0cd2f)", VALUES)
     const should = parser.evaluate()
-    const expected = "4.00"
+    const expected = 4
     expect(should).to.equal(expected)
   })
 
   it("AVERAGE", () => {
+    const parser = new LambdaParser("AVERAGE(2, 5)", VALUES)
+    const should = parser.evaluate()
+    const expected = 3.5
+    expect(should).to.equal(expected)
+  })
+
+  it("AVERAGE VARS ARR", () => {
     const parser = new LambdaParser("AVERAGE(Keluarga_qz9fe7fdbb683d.Jumlah_anak_qzb42b12e0cd2f)", VALUES)
     const should = parser.evaluate()
-    const expected = "2.00"
+    const expected = 2
     expect(should).to.equal(expected)
   })
 })

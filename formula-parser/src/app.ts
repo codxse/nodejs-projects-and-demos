@@ -25,7 +25,8 @@ export class LambdaParser implements IFormulaParser {
   }
 
   evaluate(): number {
-    const res = this.parser.parse(this.lambda)
+    const cleanLambda = this.cleanse()
+    const res = this.parser.parse(cleanLambda)
     if (res.error) {
       throw new Error(res.error)
     }
@@ -41,7 +42,28 @@ export class LambdaParser implements IFormulaParser {
   }
 
   private cleanse(): string {
-    return ""
+    const exp1 = this.aggregateExpression(this.lambda, "AVERAGE")
+    const exp2 = this.aggregateExpression(exp1, "SUM")
+    return exp2
+  }
+
+  private aggregateExpression(rawLambda: string, aggregateFunction: string): string {
+    const _re = `${aggregateFunction}\\((\\w+)\\.(\\w+)\\)`
+    const re = new RegExp(_re, "gm")
+    let exp = null
+    const lambda = rawLambda
+    let nextLambda = rawLambda
+    while ((exp = re.exec(lambda)) != null) {
+      const fullMatch = exp[0]
+      const arrayName = exp[1]
+      const variableName = exp[2]
+      if (fullMatch && arrayName && variableName) {
+        const array: any[] = this.parser.getVariable(arrayName) || []
+        const values = array.map((v) => v[variableName])
+        nextLambda = nextLambda.replace(fullMatch, `${aggregateFunction}(${values.join()})`)
+      }
+    }
+    return nextLambda
   }
 
   /**
