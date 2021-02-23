@@ -149,3 +149,12 @@ describe("Array variables", () => {
     expect(should).to.equal(expected)
   })
 })
+
+describe("Calculation withs ame row array", () => {
+  it("addition of two var in array", () => {
+    const parser = new LambdaParser("ARRAY( Data_Ibu_qzae1f0194e67a.Pendapatan_qz8cbbe14c630f + Data_Ibu_qzae1f0194e67a.Jumlah_Anak_qz2a1a736fa975 + 2)", VALUES)
+    const should = parser.evaluate()
+    const expected = [12500003, 1000005, 300002]
+    expect(should).to.eql(expected)
+  })
+})

@@ -26,9 +26,20 @@ export class LambdaParser implements IFormulaParser {
 
   evaluate(): number {
     const cleanLambda = this.cleanse()
+    this.populateArrayVars(cleanLambda)
+    this.withinArrayCalculation(cleanLambda)
+    // this.parser.on("callFunction", (name: string, params: any[], done: any) => {
+    //   if (name === 'ARRAY') {
+    //     done(10);
+    //   }
+    // })
     const res = this.parser.parse(cleanLambda)
+    // console.log("RES2", res)
     if (res.error) {
       throw new Error(res.error)
+    }
+    if (isNaN(res.result)) {
+      return res.result
     }
     return LambdaParser.parseNumber(res.result, this.precision)
   }
@@ -45,6 +56,69 @@ export class LambdaParser implements IFormulaParser {
     const exp1 = this.aggregateExpression(this.lambda, "AVERAGE")
     const exp2 = this.aggregateExpression(exp1, "SUM")
     return exp2
+  }
+
+  private populateArrayVars(nextLambda: string) {
+    // console.log(21, nextLambda)
+    this.parser.on('callVariable', (name: string, done: any) => {
+      // console.log(12, name)
+      const re = /ARRAY\((.*)\)/gm
+      let exp = null
+      const lambda = nextLambda
+      while ((exp = re.exec(lambda)) != null) {
+        const fullMatch = exp[0]
+        const expression = exp[1] || ""
+        if (fullMatch && expression) {
+          const arrayVar = expression
+            .split(/[\s+\(\)\*\\\+-]/gm)
+            .find((x) => x.match(/\w+\.\w+/gm))
+          if ((arrayVar || "").includes(name)) {
+            done(-1_000_000_000)
+          }
+        }
+      }
+    })
+  }
+
+  private withinArrayCalculation(nextLambda: string) {
+    // console.log(1, nextLambda)
+    this.parser.on("callFunction", (name: string, params: any[], done: any) => {
+      // console.log(2)
+      if (name === "ARRAY") {
+        const re = /ARRAY\((.*)\)/gm
+        let exp = null
+        const lambda = nextLambda
+        // console.log("exp", exp, lambda)
+        while ((exp = re.exec(lambda)) != null) {
+          const fullMatch = exp[0]
+          const expression = exp[1] || ""
+          if (fullMatch && expression) {
+            const arrayVar = expression
+              .split(/[\s+\(\)\*\\\+-]/gm)
+              .find((x) => x.match(/\w+\.\w+/gm))
+            if (arrayVar) {
+              const [arrayName, variableName] = (arrayVar || "").split(".")
+              const arrayOfValue: any[] = this.parser.getVariable(arrayName) || []
+              const result = arrayOfValue.map((value = {}) => {
+                const localParser = new FormulaParser()
+                for (const [key, val] of Object.entries(value)) {
+                  const variables = key.split(/\./)
+                  const variable = variables[variables.length - 1]
+                  localParser.setVariable(variable, val)
+                }
+                const localExpression = expression.replace(/\w+\./gm, "")
+                return localParser.parse(localExpression)
+              })
+              // console.log("result", result)
+              done(result.map((r) => r.result))
+              return
+            }
+          }
+        }
+        done([])
+      }
+    })
+    // console.log("X")
   }
 
   private aggregateExpression(rawLambda: string, aggregateFunction: string): string {

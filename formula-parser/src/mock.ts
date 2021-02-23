@@ -25,17 +25,17 @@ export const VALUES = {
   "Pendapatan_Ibu_qz1a05b08fa4f9.Data_Ibu_qzae1f0194e67a": [
     {
       "Nama_Ibu_qz043ad0f702a1": "Popi",
-      "Pendapatan_qz8cbbe14c630f": "12.500.000",
+      "Pendapatan_qz8cbbe14c630f": "12500000",
       "Jumlah_Anak_qz2a1a736fa975": "1"
     },
     {
       "Nama_Ibu_qz043ad0f702a1": "Popo",
-      "Pendapatan_qz8cbbe14c630f": "1.000.000",
+      "Pendapatan_qz8cbbe14c630f": "1000000",
       "Jumlah_Anak_qz2a1a736fa975": "3"
     },
     {
       "Nama_Ibu_qz043ad0f702a1": "Pupu",
-      "Pendapatan_qz8cbbe14c630f": "300.000",
+      "Pendapatan_qz8cbbe14c630f": "300000",
       "Jumlah_Anak_qz2a1a736fa975": "0"
     }
   ],
