@@ -22,6 +22,7 @@ export interface ITemplate {
     toArrayCurrencyTextMustache(): Template
     toArrayDateMustache(): Template
     toArrayTextOrTextareaOrRadioOrDropdownMustache(): Template
+    toArrayIndex(): Template
 }
 
 export class Template implements ITemplate {
@@ -144,6 +145,20 @@ export class Template implements ITemplate {
                 if (section && variable && innerText) {
                     this._mustache = this.mustache.replace(fulltext, `{{${section}.${variable}}}`)
                 }
+            }
+        }
+        return this
+    }
+
+    toArrayIndex(lookup: string[] = ["li"]): Template {
+        this._wrapArrayList(lookup)
+        const re = /<mark\s+(?=[^<>]*?class=(?:'|").*?template-variable2.*?(?:'|"))(?=[^<>]*?data-section=(?:'|")(?<section>\w+)(?:'|"))(?=[^<>]*?data-array(?:n|N)ame=(?:'|")(?<arrayName>\w+)(?:'|"))(?=[^<>]*?data-var(?:t|T)ype=(?:'|")arrayIndex(?:'|"))(?=[^<>]*?data-variable=(?:'|")(?<variable>\w+)(?:'|"))[^>]*?>(?<innerMark>[^<]*?(?:&lt;&lt;|<<)\w+\.\w+\.\w+(?:&gt;&gt;|>>)[^<]*?)<\/mark>/gm
+        let exp = null
+        const mustache = this.mustache
+        while ((exp = re.exec(mustache)) != null) {
+            const fullMatch = exp[0]
+            if (fullMatch) {
+                this._mustache = this._mustache.replace(fullMatch, `{{@index + 1}}`)
             }
         }
         return this
