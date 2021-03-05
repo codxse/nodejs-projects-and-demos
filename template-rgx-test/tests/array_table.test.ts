@@ -36,4 +36,26 @@ describe("Regex array table test", () => {
       .toArrayDateMustache(undefined, ["li", "tr"])
       .mustache).to.equal(expected)
   })
+
+  it("array index miced", () => {
+    const raw = `<ul><li class="array" data-section="Unlisted" data-varname="Identitas_diri_qzbc163093373f" data-vartype="array">No:&nbsp;<mark class="template-variable2 Unlisted index_qz10f126c497e0 Identitas_diri_qzbc163093373f" title="index" contenteditable="false" data-variable="index_qz10f126c497e0" data-vartype="arrayIndex" data-section="Unlisted" data-arrayname="Identitas_diri_qzbc163093373f">&lt;&lt;Unlisted.Identitas_diri.index&gt;&gt;</mark> Nama:&nbsp;<mark class="template-variable2 Unlisted nama_qzc5d07279f3f8 Identitas_diri_qzbc163093373f" title="nama" contenteditable="false" data-variable="nama_qzc5d07279f3f8" data-vartype="text" data-section="Unlisted" data-arrayname="Identitas_diri_qzbc163093373f">&lt;&lt;Unlisted.Identitas_diri.nama&gt;&gt;</mark></li></ul>`
+    const expected = `<ul>{{#Unlisted.Identitas_diri_qzbc163093373f}}<li class="array" data-section="Unlisted" data-varname="Identitas_diri_qzbc163093373f" data-vartype="array">No:&nbsp;{{@index + 1}} Nama:&nbsp;{{nama_qzc5d07279f3f8}}</li>{{/Unlisted.Identitas_diri_qzbc163093373f}}</ul>`
+    const template = new Template(raw)
+    expect(template
+      .toTextOrTextareaOrRadioOrDropdownMustache()
+      .toDateMustache()
+      .toCurrencyTextMustache()
+      .toCurrencyNumberMustache()
+      .toNumberTextMustache()
+      .toNumberMustache()
+      .toArrayIndex(["li", "tr"])
+      .toArrayTextOrTextareaOrRadioOrDropdownMustache(["li", "tr"])
+      .toArrayCurrencyTextMustache(["li", "tr"])
+      .toArrayCurrencyMustache(["li", "tr"])
+      .toArrayNumberMustache(["li", "tr"])
+      .toArrayNumberTextMustache(["li", "tr"])
+      .toArrayDateMustache(undefined, ["li", "tr"])
+      .mustache).to.equal(expected)
+  })
+
 })
