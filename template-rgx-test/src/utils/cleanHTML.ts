@@ -17,5 +17,8 @@ export const cleanHTMLString = (htmlString: string): string => {
     }
   }
 
-  return `<div>${styleString} ${bodyString}</div>`
+  if (styleString && bodyString) {
+    return `<div>${styleString} ${bodyString}</div>`
+  }
+  return ""
 }
